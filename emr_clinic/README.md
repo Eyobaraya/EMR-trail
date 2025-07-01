@@ -1,259 +1,213 @@
 # 🏥 EMR Clinic System
 
-A comprehensive Electronic Medical Records (EMR) system designed for local clinics, built with PHP, MySQL, and Bootstrap.
+A complete Electronic Medical Records (EMR) system designed for a local clinic with multiple rooms. Built with PHP, MySQL, and Bootstrap, it replaces paper-based workflows and connects all clinic PCs via LAN.
+
+---
 
 ## 🚀 Features
 
 ### ✅ Completed Features
-- **User Authentication & Role Management**
-  - Secure login system with role-based access
-  - Support for multiple user roles: Admin, Doctor, Lab Tech, Ultrasound Tech, Emergency Nurse, Receptionist
-  - Session management and security
 
-- **Patient Management**
-  - Patient registration with unique card numbers
-  - Patient search and filtering
-  - Patient status management (active/inactive)
-  - Patient history tracking
+* **User Authentication & Role Management**
 
-- **Dashboard System**
-  - Role-specific dashboards
-  - Statistics and overview cards
-  - Recent activity tracking
-  - Quick action buttons
+  * Secure login system with session handling
+  * Role-based access: Admin, Doctor, Lab Tech, Ultrasound Tech, Emergency Nurse, Receptionist
+
+* **Patient Management**
+
+  * Unique patient card creation (name, date, sex, card number, phone)
+  * Status (active/inactive) for tracking returning patients
+  * Excel import of old patient data
+
+* **Reception Queueing System**
+
+  * Receptionist activates patient records
+  * Patients are automatically added to a doctor's queue — no manual search by doctor
+
+* **Dashboard System**
+
+  * Role-specific dashboards
+  * Recent activity, patient queue, and statistics
+
+---
 
 ### 🔄 In Progress
-- Visit management and medical history
-- Lab module (requests and results)
-- Ultrasound module
-- Emergency room module
-- Reporting and PDF generation
+
+* Doctor queue system (automatically receives patients in order)
+* Visit management (symptoms, diagnosis, prescription, timestamp)
+* Lab test request & result submission
+* Ultrasound report entry and image uploads
+* Emergency room visit form (vitals, symptoms, quick notes)
+* PDF/printable summaries and visit exports
+
+---
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5
-- **Backend**: PHP 7.4+
-- **Database**: MySQL 5.7+
-- **Server**: Apache (XAMPP/WAMP)
-- **Additional**: Font Awesome icons, jQuery
+* **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5
+* **Backend**: PHP 7.4+
+* **Database**: MySQL 5.7+
+* **Server**: Apache (XAMPP/WAMP)
+* **Other Tools**: PhpSpreadsheet (Excel import), TCPDF (PDF), jQuery
+
+---
 
 ## 📋 Requirements
 
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Apache web server
-- XAMPP, WAMP, or similar local development environment
+* PHP 7.4 or higher
+* MySQL 5.7 or higher
+* Apache web server
+* XAMPP, WAMP, or any local server environment
+
+---
 
 ## 🚀 Installation & Setup
 
-### 1. Clone/Download the Project
-```bash
-# If using git
-git clone <repository-url>
-cd emr_clinic
+### 1. Download & Extract
 
-# Or download and extract to your web server directory
-```
+* Clone the repository or extract `emr_clinic.zip` into your `htdocs` folder.
 
 ### 2. Database Setup
-1. Start your MySQL server (XAMPP/WAMP)
-2. Create a new database named `emr_clinic`
-3. Import the database schema:
-   ```sql
-   -- Run the contents of database/schema.sql in your MySQL client
-   ```
 
-### 3. Configuration
-1. Edit `config/db.php` with your database credentials:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'emr_clinic');
-   define('DB_USER', 'root');        // Your MySQL username
-   define('DB_PASS', '');            // Your MySQL password
-   ```
+1. Open phpMyAdmin → Create database `emr_clinic`
+2. Import `database/schema.sql`
 
-### 4. Initialize Sample Data
-1. Open your browser and navigate to:
-   ```
-   http://localhost/emr_clinic/scripts/setup.php
-   ```
-2. This will create sample users and patients for testing
+### 3. Configure Database Connection
+
+Update `config/db.php` with:
+
+```php
+$host = 'localhost';
+$db = 'emr_clinic';
+$user = 'root';
+$pass = '';
+```
+
+### 4. Add Test Users
+
+Manually add users to the `users` table in phpMyAdmin (or use `setup.php` script).
 
 ### 5. Access the System
-1. Navigate to: `http://localhost/emr_clinic/`
-2. Login with default credentials:
-   - **Admin**: username: `admin`, password: `admin123`
-   - **Doctor**: username: `doctor`, password: `password123`
-   - **Lab Tech**: username: `lab`, password: `password123`
-   - **Ultrasound Tech**: username: `ultrasound`, password: `password123`
-   - **Emergency Nurse**: username: `emergency`, password: `password123`
-   - **Receptionist**: username: `receptionist`, password: `password123`
 
-## 📁 Project Structure
+Go to:
 
 ```
-emr_clinic/
-├── auth/                   # Authentication pages
-│   ├── login.php          # Login form
-│   └── logout.php         # Logout handler
-├── config/                # Configuration files
-│   └── db.php            # Database connection
-├── database/              # Database files
-│   └── schema.sql        # Database schema
-├── includes/              # PHP includes
-│   └── auth.php          # Authentication functions
-├── models/                # Database models (future)
-├── public/                # Public assets
-│   ├── css/              # Stylesheets
-│   ├── js/               # JavaScript files
-│   └── uploads/          # File uploads
-├── scripts/               # Utility scripts
-│   └── setup.php         # Database setup script
-├── templates/             # HTML templates
-│   ├── header.php        # Page header
-│   └── sidebar.php       # Navigation sidebar
-├── views/                 # Page views
-│   ├── dashboard_admin.php # Admin dashboard
-│   ├── patients.php      # Patient list
-│   ├── add_patient.php   # Add patient form
-│   └── ...               # Other view files
-├── .htaccess             # Apache configuration
-├── index.php             # Main entry point
-└── README.md             # This file
+http://localhost/emr_clinic/
 ```
+
+Use login credentials created earlier.
+
+---
 
 ## 👥 User Roles & Permissions
 
 ### 🔧 Admin
-- Full system access
-- User management
-- System configuration
-- Reports and analytics
+
+* Full access to all modules and user management
 
 ### 👨‍⚕️ Doctor
-- Patient management
-- Visit creation and management
-- Lab test requests
-- Ultrasound requests
-- View lab results
+
+* Automatically receives patients from queue
+* Adds diagnoses, prescriptions, lab/ultrasound requests
+* Views past visits and results
 
 ### 🔬 Lab Technician
-- View pending lab requests
-- Enter lab results
-- Upload scanned results
-- Mark tests as completed
 
-### 🩻 Ultrasound Technician
-- View ultrasound requests
-- Enter ultrasound results
-- Upload ultrasound images
-- Generate ultrasound reports
+* Sees lab requests
+* Enters results, uploads scans
+
+### 🎩 Ultrasound Technician
+
+* Views ultrasound requests
+* Uploads reports and images
 
 ### 🚨 Emergency Nurse
-- Emergency patient registration
-- Emergency visit management
-- Quick patient assessment
-- Forward to doctor when needed
+
+* Registers emergency patients
+* Inputs vitals/symptoms
+* Forwards to doctor if needed
 
 ### 📋 Receptionist
-- Patient registration
-- Appointment scheduling
-- Patient search and lookup
-- Basic patient information management
 
-## 🔒 Security Features
-
-- Password hashing using PHP's `password_hash()`
-- Session-based authentication
-- Role-based access control
-- SQL injection prevention with prepared statements
-- XSS protection with `htmlspecialchars()`
-- CSRF protection (planned)
-
-## 🎨 UI/UX Features
-
-- Responsive design with Bootstrap 5
-- Modern, clean interface
-- Role-specific navigation
-- Interactive dashboards
-- Search and filtering capabilities
-- Mobile-friendly layout
-
-## 📊 Database Schema
-
-The system uses the following main tables:
-- `users` - User accounts and roles
-- `patients` - Patient information
-- `visits` - Medical visit records
-- `lab_requests` - Laboratory test requests
-- `ultrasound_reports` - Ultrasound reports
-- `emergency_visits` - Emergency room records
-
-## 🚧 Development Roadmap
-
-### Phase 1: Core System ✅
-- [x] Project setup and structure
-- [x] Database schema
-- [x] User authentication
-- [x] Basic patient management
-
-### Phase 2: Patient Management ✅
-- [x] Patient registration
-- [x] Patient search and filtering
-- [x] Patient status management
-
-### Phase 3: Visit Management (In Progress)
-- [ ] Visit form creation
-- [ ] Visit history tracking
-- [ ] Medical history management
-
-### Phase 4: Lab Module (Planned)
-- [ ] Lab test requests
-- [ ] Lab results entry
-- [ ] Result notifications
-
-### Phase 5: Ultrasound Module (Planned)
-- [ ] Ultrasound requests
-- [ ] Ultrasound reports
-- [ ] Image upload functionality
-
-### Phase 6: Emergency Module (Planned)
-- [ ] Emergency patient registration
-- [ ] Emergency visit management
-- [ ] Quick assessment forms
-
-### Phase 7: Reporting (Planned)
-- [ ] PDF report generation
-- [ ] Statistical reports
-- [ ] Data export functionality
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
-
-## 🔄 Updates
-
-### Version 1.0.0 (Current)
-- Initial release with core functionality
-- User authentication and role management
-- Patient management system
-- Basic dashboard functionality
+* Registers new patients
+* Activates returning patients
+* Sends patients to doctor queue
 
 ---
 
-**Note**: This is a local clinic EMR system designed for internal use. Ensure proper security measures are in place before deploying to production environments. 
+## 🔒 Security Features
+
+* Hashed passwords using `password_hash()`
+* Session-based authentication
+* Role-level page protection
+* SQL injection prevention (prepared statements)
+* XSS protection with `htmlspecialchars()`
+* Planned CSRF protection
+
+---
+
+## 📊 Database Schema
+
+Includes:
+
+* `users` — for all clinic staff
+* `patients` — all patient cards
+* `visits` — doctor/emergency room visits
+* `lab_requests` — test orders and results
+* `ultrasound_reports` — ultrasound documentation
+* `emergency_visits` — emergency assessments
+
+---
+
+## 🚧 Roadmap
+
+### ✅ Phase 1: Core Setup
+
+* [x] Folder structure & configuration
+* [x] Database schema & connection
+* [x] Authentication system
+* [x] Patient registration
+
+### ✅ Phase 2: Patient Flow
+
+* [x] Reception-based patient activation
+* [x] Patient queue system for doctors
+
+### 🔄 Phase 3: Visit Management
+
+* [ ] New visit form (symptoms, diagnosis)
+* [ ] Visit history view per patient
+
+### 🔄 Phase 4: Lab Module
+
+* [ ] Test request form (from doctor)
+* [ ] Lab result submission + scan upload
+
+### 🔄 Phase 5: Ultrasound Module
+
+* [ ] Report entry & image upload
+
+### 🔄 Phase 6: Emergency Room
+
+* [ ] Emergency intake form (vitals + notes)
+* [ ] Connection to doctor review
+
+### 🔄 Phase 7: Reporting & Printouts
+
+* [ ] PDF generation (visit summary, test result)
+* [ ] Date filters, exports, and summaries
+
+---
+
+## 😖 Support
+
+* Ask here in this repo
+* Contact the dev team
+
+## 📝 License
+
+MIT License
+
+---
+
+**Note:** This system is intended for use on a private clinic network (LAN) and does not require internet access. Ensure proper database backups and secure local access.
